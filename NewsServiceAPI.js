@@ -46,7 +46,8 @@ function createStory(obj) {
     return { story: story, id: id };
 }
 
-const create = function (req, res, next) {
+// POST    /stories    -> create, return URI
+app.post(STORIES_PATH, function (req, res, next) {
     if (!Array.isArray(req.body)) {
         let obj;
         try {
@@ -83,10 +84,7 @@ const create = function (req, res, next) {
         }
         res.send(returnArray);
     }
-};
-
-// POST    /stories    -> create, return URI
-app.post(STORIES_PATH, create);
+});
 
 function sendObject(obj, res) {
     if (!obj) {
@@ -104,7 +102,7 @@ app.get(STORIES_BY_ID_PATH, function (req, res, next) {
     sendObject(body, res);
 });
 
-app.get('/search', preprocessors, function (req, res, next) {
+app.get('/search', function (req, res, next) {
     let queryObject = url.parse(req.url, true).query,
         filteredStories;
     try {
@@ -134,7 +132,7 @@ app.put(STORIES_BY_ID_PATH, function (req, res) {
     });
 });
 
-app.put('/editTitle', preprocessors, function (req, res, next) {
+app.put('/editTitle', function (req, res, next) {
     let author = req.body.author,
         oldHeadline = req.body.oldHeadline,
         newHeadline = req.body.newHeadline,
@@ -149,7 +147,7 @@ app.put('/editTitle', preprocessors, function (req, res, next) {
     }
 });
 
-app.put('/editContent', preprocessors, function (req, res, next) {
+app.put('/editContent', function (req, res, next) {
     let author = req.body.author,
         headline = req.body.headline,
         newContent = req.body.newContent,
@@ -180,7 +178,7 @@ const deleteFn = function (req, res, next) {
 
 // DELETE    /stories/:id    -> destroy
 app.delete(STORIES_BY_ID_PATH, deleteFn);
-app.delete('/delete/:id', preprocessors, deleteFn);
+app.delete('/delete/:id', deleteFn);
 
 // Send available options on OPTIONS requests
 app.options(STORIES_PATH, function (req, res) {
