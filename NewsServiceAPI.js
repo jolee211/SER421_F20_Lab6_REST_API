@@ -20,23 +20,7 @@ app.use(log.requestLogger());
 
 const STORIES_PATH = '/stories';
 const STORIES_BY_ID_PATH = STORIES_PATH + '/:id';
-
-// Response to GET requests on /stories
-app.get(STORIES_PATH, function (req, res) {
-    let index = newsService.getStories().map(function (story, i) {
-        return {
-            href: '/stories/' + i,
-            properties: {
-                author: story.author,
-                headline: story.headline,
-                public: story.public,
-                content: story.content,
-                date: story.date
-            }
-        };
-    });
-    res.send(index);
-});
+const TITLE_PATH = '/titles';
 
 function createStory(obj) {
     let story = new NewsStory(obj);
@@ -47,6 +31,7 @@ function createStory(obj) {
 }
 
 // POST    /stories    -> create, return URI
+// This is the endpoint to use for explicitly creating a new story
 app.post(STORIES_PATH, function (req, res, next) {
     if (!Array.isArray(req.body)) {
         let obj;
@@ -86,6 +71,59 @@ app.post(STORIES_PATH, function (req, res, next) {
     }
 });
 
+// PUT    /stories/:id    -> create or update
+// This is the endpoint to use if you want to use only one call to either 
+// create or update a story. If you specify an ID that doesn't exist, then you
+// create a new story, otherwise this call will update the existing story
+// identified by the specified ID.
+app.put(STORIES_BY_ID_PATH, function (req, res) {
+    let story = new NewsStory(req.body),
+        id = req.params.id,
+        exists = newsService.getById(id);
+    newsService.setStory(id, story);
+    if (exists) {
+        return res.send(204);
+    }
+    
+    // make sure that id is valid
+    id = newsService.findIndex(story.headline);
+    res.send(201, {
+        href: '/stories/' + id
+    });
+});
+
+app.put(TITLE_PATH, function (req, res, next) {
+    let author = req.body.author,
+        oldHeadline = req.body.oldHeadline,
+        newHeadline = req.body.newHeadline,
+        exists = newsService.findIndexByAuthorAndHeadline(author, oldHeadline) != -1;
+    if (exists) {
+        newsService.editTitle(author, oldHeadline, newHeadline);
+        return res.send(204);
+    } else {
+        let err = new Error('Story not found');
+        err.status = 404;
+        return next(err);
+    }
+});
+
+// Response to GET requests on /stories
+app.get(STORIES_PATH, function (req, res) {
+    let index = newsService.getStories().map(function (story, i) {
+        return {
+            href: '/stories/' + i,
+            properties: {
+                author: story.author,
+                headline: story.headline,
+                public: story.public,
+                content: story.content,
+                date: story.date
+            }
+        };
+    });
+    res.send(index);
+});
+
 function sendObject(obj, res) {
     if (!obj) {
         let err = new Error('Story not found');
@@ -113,38 +151,6 @@ app.get('/search', function (req, res, next) {
         });
     }
     sendObject(filteredStories, res);
-});
-
-// PUT    /stories/:id    -> create or update
-app.put(STORIES_BY_ID_PATH, function (req, res) {
-    let story = new NewsStory(req.body),
-        id = req.params.id,
-        exists = newsService.getById(id);
-    newsService.setStory(id, story);
-    if (exists) {
-        return res.send(204);
-    }
-    
-    // make sure that id is valid
-    id = newsService.findIndex(story.headline);
-    res.send(201, {
-        href: '/stories/' + id
-    });
-});
-
-app.put('/editTitle', function (req, res, next) {
-    let author = req.body.author,
-        oldHeadline = req.body.oldHeadline,
-        newHeadline = req.body.newHeadline,
-        exists = newsService.findIndexByAuthorAndHeadline(author, oldHeadline) != -1;
-    if (exists) {
-        newsService.editTitle(author, oldHeadline, newHeadline);
-        return res.send(204);
-    } else {
-        let err = new Error('Story not found');
-        err.status = 404;
-        return next(err);
-    }
 });
 
 app.put('/editContent', function (req, res, next) {
