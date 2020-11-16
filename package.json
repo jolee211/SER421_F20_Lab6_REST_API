@@ -1,7 +1,7 @@
 {
-    "name": "dlee129-421lab5",
+    "name": "dlee129-421lab6",
     "version": "0.0.1",
-    "description": "Implementation of NewsService API",
+    "description": "Implementation of NewsService REST API",
     "dependencies": {
         "bunyan-request-logger": "2.1.0",
         "express": "4.x",
