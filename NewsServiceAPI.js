@@ -173,6 +173,26 @@ app.delete(STORIES_BY_ID_PATH, function (req, res, next) {
     res.send(204);
 });
 
+// GET    /stories    -> retrieve
+// This is the endpoint to use for searching for news stories by specifying
+// a filter. The filters are given as query parameters:
+// headline = a substring of the title
+// dateFrom = starting date of a date range
+// dateTo = ending date of a date range
+// author = author name 
+app.get(STORIES_PATH, function (req, res, next) {
+    let queryObject = url.parse(req.url, true).query,
+        filteredStories;
+    try {
+        filteredStories = newsService.filter(queryObject);
+    } catch (err) {
+        return res.send(500, {
+            message: err.message
+        });
+    }
+    sendObject(filteredStories, res);
+});
+
 // Response to GET requests on /stories
 app.get(STORIES_PATH, function (req, res) {
     let index = newsService.getStories().map(function (story, i) {
@@ -204,19 +224,6 @@ app.get(STORIES_BY_ID_PATH, function (req, res, next) {
     let id = req.params.id,
         body = newsService.getById(id);
     sendObject(body, res);
-});
-
-app.get('/search', function (req, res, next) {
-    let queryObject = url.parse(req.url, true).query,
-        filteredStories;
-    try {
-        filteredStories = newsService.filter(queryObject);
-    } catch (err) {
-        return res.send(500, {
-            message: err.message
-        });
-    }
-    sendObject(filteredStories, res);
 });
 
 // Send available options on OPTIONS requests
