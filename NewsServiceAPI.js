@@ -138,8 +138,8 @@ app.put(TITLE_PATH, function (req, res, next) {
 // The payload for the PUT request looks like:
 // {
 //     "author": "author name",
-//     "oldHeadline": "existing headline",
-//     "newHeadline": "new headline to change it to"
+//     "headline": "existing headline",
+//     "newContent": "new content"
 // }
 app.put(CONTENT_PATH, function (req, res, next) {
     let author = req.body.author,
@@ -156,6 +156,22 @@ app.put(CONTENT_PATH, function (req, res, next) {
         return next(err);
     }
 })
+
+// DELETE    /stories/:id    -> destroy
+// This is the endpoint to use for deleting a news story
+// The ID of the story to delete is specified in the URL
+app.delete(STORIES_BY_ID_PATH, function (req, res, next) {
+    let id = req.params.id,
+        body = newsService.getById(id),
+        err;
+    if (!body) {
+        err = new Error('Story not found');
+        err.status = 404;
+        return next(err);
+    }
+    newsService.delete(body.headline);
+    res.send(204);
+});
 
 // Response to GET requests on /stories
 app.get(STORIES_PATH, function (req, res) {
@@ -202,23 +218,6 @@ app.get('/search', function (req, res, next) {
     }
     sendObject(filteredStories, res);
 });
-
-const deleteFn = function (req, res, next) {
-    let id = req.params.id,
-        body = newsService.getById(id),
-        err;
-    if (!body) {
-        err = new Error('Story not found');
-        err.status = 404;
-        return next(err);
-    }
-    newsService.delete(body.headline);
-    res.send(204);
-};
-
-// DELETE    /stories/:id    -> destroy
-app.delete(STORIES_BY_ID_PATH, deleteFn);
-app.delete('/delete/:id', deleteFn);
 
 // Send available options on OPTIONS requests
 app.options(STORIES_PATH, function (req, res) {
