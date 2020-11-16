@@ -1,0 +1,561 @@
+{
+	"info": {
+		"_postman_id": "25a28109-e65e-426b-9505-baa145efcaf4",
+		"name": "NewsService_test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "username",
+						"value": "jolee211",
+						"type": "text"
+					},
+					{
+						"key": "password",
+						"value": "jolee211",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "testR1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2xlZTIxMSIsImV4cCI6MTYwNTk4NDkwNDIwNH0.mO2rloFhH4B8jKsOwmvh8nMHujPK5X7Lt4drCHUO2DM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"author\": \"Li Zhou\",\n    \"headline\": \"Wildfires kill eight\",\n    \"public\": false,\n    \"content\": \"Oregon faces fire conditions unseen in decades\",\n    \"date\": \"2020-09-10\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/create",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "testR2",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2xlZTIxMSIsImV4cCI6MTYwNTk4NDkwNDIwNH0.mO2rloFhH4B8jKsOwmvh8nMHujPK5X7Lt4drCHUO2DM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"author\": \"Li Zhou\",\n    \"oldHeadline\": \"Wildfires kill eight\",\n    \"newHeadline\": \"Wildfires kill ten\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/editTitle",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"editTitle"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "testR3",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2xlZTIxMSIsImV4cCI6MTYwNTk4NTQzMjU4NX0.zHxxUqQIgHpw5mFA_6IlpaOM4O71j6JAz4KO4tU5-5k",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"author\": \"Li Zhou\",\n    \"headline\": \"Wildfires kill ten\",\n    \"newContent\": \"Unprecedented fire conditions burn more than 900,000 acres\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/editContent",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"editContent"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "testR4",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2xlZTIxMSIsImV4cCI6MTYwNTk4NDkwNDIwNH0.mO2rloFhH4B8jKsOwmvh8nMHujPK5X7Lt4drCHUO2DM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/delete/{{idToDelete}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"delete",
+						"{{idToDelete}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "testR2WithNonExistingItem",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2xlZTIxMSIsImV4cCI6MTYwNTk4NTQzMjU4NX0.zHxxUqQIgHpw5mFA_6IlpaOM4O71j6JAz4KO4tU5-5k",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"author\": \"Li Zhou\",\n    \"oldHeadline\": \"non-existing headline\",\n    \"newHeadline\": \"new headline\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/editTitle",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"editTitle"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "setUpMultipleStories",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2xlZTIxMSIsImV4cCI6MTYwNTk4NTQzMjU4NX0.zHxxUqQIgHpw5mFA_6IlpaOM4O71j6JAz4KO4tU5-5k",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n\t{\n\t\t\"author\": \"Li Zhou\",\n\t\t\"headline\": \"A group of centrist lawmakers has a new compromise proposal for more stimulus\",\n\t\t\"public\": false,\n\t\t\"content\": \"A centrist bipartisan group is trying to break through the stimulus stalemate - and put pressure on Congress to get something done. Members of the House Problem Solvers Caucus on Tuesday released what they viewed as an effective compromise offer amid the ongoing impasse between Democratic and Republican negotiators over the next phase of Covid-19 aid.\",\n\t\t\"date\": \"2020-09-16T07:00:00.000Z\"\n\t},\n\t{\n\t\t\"author\": \"Caitlin McFall\",\n\t\t\"headline\": \"Ukraine backs opposition forces against Belarusian president\",\n\t\t\"public\": false,\n\t\t\"content\": \"Ukrainian lawmakers joined Western countries in condemning the recent presidential election in Belarus by passing a motion that would enforce future sanctions against individuals involved in fixing elections and using violence against demonstrators.\",\n\t\t\"date\": \"2020-09-15T07:00:00.000Z\"\n\t},\n\t{\n\t\t\"author\": \"Associated Press\",\n\t\t\"headline\": \"Nicaragua, Venezuela offer asylum to Snowden\",\n\t\t\"public\": false,\n\t\t\"content\": \"Presidents Daniel Ortega of Nicaragua and Nicolas Maduro of Venezuela said Friday they were willing to grant asylum to NSA leaker Edward Snowden.\",\n\t\t\"date\": \"2013-07-05T07:00:00.000Z\"\n\t},\n\t{\n\t\t\"author\": \"Allyson Lieberman\",\n\t\t\"headline\": \"Magic's not back yet at Disney: Analysts\",\n\t\t\"public\": false,\n\t\t\"content\": \"Michael Eisner's efforts to slash costs and pump up revenue at Disney may have stabilized earnings, but some analysts insist that the road ahead is still bumpy. Morgan Stanley Dean Witter's Richard Bilotti warned in a report yesterday that he 'continues to be cautious about the stock,' which he 'anticipates could tread water for about six months.' Bilotti remains pessimistic about the future of the media empire, which he says is susceptible to the economy and would likely be affected by any economic slowdown. Meanwhile, Prudential Securities' media analyst Katherine Styponais says the Magic Kingdom 'still [has] a ways to go until we see a turnaround.' \\\"There are a couple of businesses that we will continue to keep an eye on - particularly their consumer products division.\\\" \\\"We continue to put a 'hold' on Disney until we see stronger results,\\\" Styponais said.\",\n\t\t\"date\": \"1999-09-28T07:00:00.000Z\"\n\t},\n\t{\n\t\t\"author\": \"David Goodman\",\n\t\t\"headline\": \"Six Kids Die in Detroit House Fire\",\n\t\t\"public\": false,\n\t\t\"content\": \"Six children died in a fire at their grandmother's home Sunday while their mother was at a hospital after having a baby. The fire rushed up a stairway and trapped the children in two upstairs bedrooms. Their grandmother and three others escaped. The fire started in a living room closet and appeared accidental, but its cause was not yet known, fire Lt. Katrina Butler said. \\\"Oh God, no! No! No!,\\\" neighbor Carolyn King screamed, falling to her knees as coroners' workers carried the first of six body bags from the home.\",\n\t\t\"date\": \"1998-12-27T07:00:00.000Z\"\n\t},\n\t{\n\t\t\"author\": \"United Press International\",\n\t\t\"headline\": \"McEnroe routs Lendl\",\n\t\t\"public\": false,\n\t\t\"content\": \"John McEnroe settled his grudge duel with Ivan Lendl in straight sets and Chris Lewis survived a 3-hour, 45-minute marathon against Kevin Curren yesterday to advance to tomorrow's final in the $1.4 million Wimbledon chamnpionships. McEnroe, pushed to a tiebreaker in the first set, won it and went to a 7-6, 6-4, 6-4 victory over Lendl.\",\n\t\t\"date\": \"1983-07-02T07:00:00.000Z\"\n\t}\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/create",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "testR5a",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2xlZTIxMSIsImV4cCI6MTYwNTk4NTQzMjU4NX0.zHxxUqQIgHpw5mFA_6IlpaOM4O71j6JAz4KO4tU5-5k",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/search?headline=A",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "headline",
+							"value": "A"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "testDateFromFilter",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2xlZTIxMSIsImV4cCI6MTYwNTk4NTQzMjU4NX0.zHxxUqQIgHpw5mFA_6IlpaOM4O71j6JAz4KO4tU5-5k",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/search?dateFrom=2000-05-10",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "dateFrom",
+							"value": "2000-05-10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "testDateToFilter",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2xlZTIxMSIsImV4cCI6MTYwNTk4NTQzMjU4NX0.zHxxUqQIgHpw5mFA_6IlpaOM4O71j6JAz4KO4tU5-5k",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/search?dateTo=2013-09-09",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "dateTo",
+							"value": "2013-09-09"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "testDateRangeFilter",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2xlZTIxMSIsImV4cCI6MTYwNTk4NTQzMjU4NX0.zHxxUqQIgHpw5mFA_6IlpaOM4O71j6JAz4KO4tU5-5k",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/search?dateFrom=1992-03-24&dateTo=2002-03-12",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "dateFrom",
+							"value": "1992-03-24"
+						},
+						{
+							"key": "dateTo",
+							"value": "2002-03-12"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "testR5c",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2xlZTIxMSIsImV4cCI6MTYwNTk4NTQzMjU4NX0.zHxxUqQIgHpw5mFA_6IlpaOM4O71j6JAz4KO4tU5-5k",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/search?author=Li Zhou",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "author",
+							"value": "Li Zhou"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "setUpMoreStoriesOfSameAuthors",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2xlZTIxMSIsImV4cCI6MTYwNTk4NTQzMjU4NX0.zHxxUqQIgHpw5mFA_6IlpaOM4O71j6JAz4KO4tU5-5k",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"author\": \"Allyson Lieberman\",\n        \"headline\": \"Bush Decries Exxon Valdez Spillage of 'Precious, Precious' Oil\",\n        \"public\": false,\n        \"content\": \"In a highly charged White House press conference Friday, President Bush lashed out against Exxon's supertanker spill off the Alaska coast, decrying the company's \\\"shocking lack of respect for our planet's greatest natural resource: precious, precious oil.\\\" \\\"What has happened there in Alaska is a tragic, tragic waste of the fossil fuel most dear to my heart,\\\" the visibly grieving president said.\",\n        \"date\": \"1989-03-25T07:00:00.000Z\"\n    },\n    {\n        \"author\": \"David Goodman\",\n        \"headline\": \"Ouija riot baffles police\",\n        \"public\": false,\n        \"content\": \"The mass hysteria that drove students temporarily berserk at a military-styled private school here yesterday began when several students were playing with a ouija board and suddenly felt that \\\"a spirit took over it,\\\" a teacher told the Miami News today. \\\"Everybody just got carried away and it was a riot,\\\" the teacher, Iliana Vicledo, said. \\\"There were girls crying and screaming that there was a spirit inside (the ouija board).\\\" Police said they were baffled by the outbreak at the Miami Aerospace Academy, which they said led to \\\"mass hysteria\\\" that had students kicking walls, tearing at doors, talking of witches and screaming about demons. \\\"The whole school went berserk,\\\" said Miami policeman Harry Cunelli.\",\n        \"date\": \"1979-10-26T07:00:00.000Z\"\n    },\n    {\n        \"author\": \"David Goodman\",\n        \"headline\": \"Remember Those Few Glorious Minutes When the World Was Free of Trump's Twitter Account?\",\n        \"public\": false,\n        \"content\": \"Nov. 2, 2017, is a day that will go down in history.\",\n        \"date\": \"2017-12-27T07:00:00.000Z\"\n    },\n    {\n        \"author\": \"Caitlin McFall\",\n        \"headline\": \"'I turned away Beatles for just £25'\",\n        \"public\": false,\n        \"content\": \"City landlord George, 72, has no regrets. The man who once turned down the Beatles because they were \\\"too pricey\\\" is still going strong at his pub in Sneinton. George Dove, 72, landlord of The March Hare on Carlton Road, has never regretted his decision to give the Fab Four the heave-ho. That's because in his 36 years as landlord he's never had trouble drawing the customers.\",\n        \"date\": \"1994-12-12T07:00:00.000Z\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/create",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "testR5ac",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2xlZTIxMSIsImV4cCI6MTYwNTk4NTQzMjU4NX0.zHxxUqQIgHpw5mFA_6IlpaOM4O71j6JAz4KO4tU5-5k",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/search?headline=in&author=David Goodman",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "headline",
+							"value": "in"
+						},
+						{
+							"key": "author",
+							"value": "David Goodman"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "testR5abc v1",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2xlZTIxMSIsImV4cCI6MTYwNTk4NTQzMjU4NX0.zHxxUqQIgHpw5mFA_6IlpaOM4O71j6JAz4KO4tU5-5k",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/search?headline=r&author=Caitlin McFall&dateFrom=2010-12-09&dateTo=2013-02-07",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "headline",
+							"value": "r"
+						},
+						{
+							"key": "author",
+							"value": "Caitlin McFall"
+						},
+						{
+							"key": "dateFrom",
+							"value": "2010-12-09"
+						},
+						{
+							"key": "dateTo",
+							"value": "2013-02-07"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "testR5abc v2",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2xlZTIxMSIsImV4cCI6MTYwNTk4NTQzMjU4NX0.zHxxUqQIgHpw5mFA_6IlpaOM4O71j6JAz4KO4tU5-5k",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/search?headline=g&author=Caitlin McFall&dateFrom=2017-09-29&dateTo=2020-12-09",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "headline",
+							"value": "g"
+						},
+						{
+							"key": "author",
+							"value": "Caitlin McFall"
+						},
+						{
+							"key": "dateFrom",
+							"value": "2017-09-29"
+						},
+						{
+							"key": "dateTo",
+							"value": "2020-12-09"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "9a6a2e85-6fcc-4b5a-ad81-79ff773a1d92",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "13cc0baf-e41e-40e5-9158-9a65a53c693c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "96ffc05b-1c1d-40bb-ac0c-faba4a805eca",
+			"key": "storyId",
+			"value": "11"
+		},
+		{
+			"id": "2fb2d79d-d022-4c98-95f1-ad092511abd8",
+			"key": "idToDelete",
+			"value": "0"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
