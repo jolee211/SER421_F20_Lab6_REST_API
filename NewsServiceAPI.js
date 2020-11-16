@@ -21,6 +21,7 @@ app.use(log.requestLogger());
 const STORIES_PATH = '/stories';
 const STORIES_BY_ID_PATH = STORIES_PATH + '/:id';
 const TITLE_PATH = '/titles';
+const CONTENT_PATH = '/content';
 
 function createStory(obj) {
     let story = new NewsStory(obj);
@@ -32,6 +33,14 @@ function createStory(obj) {
 
 // POST    /stories    -> create, return URI
 // This is the endpoint to use for explicitly creating a new story
+// The payload for the POST request looks like:
+// {
+//     "author": "author name",
+//     "headline": "title of the story",
+//     "public": true|false,
+//     "content": "content of the story",
+//     "date": "yyyy-MM-dd"
+// }
 app.post(STORIES_PATH, function (req, res, next) {
     if (!Array.isArray(req.body)) {
         let obj;
@@ -75,7 +84,16 @@ app.post(STORIES_PATH, function (req, res, next) {
 // This is the endpoint to use if you want to use only one call to either 
 // create or update a story. If you specify an ID that doesn't exist, then you
 // create a new story, otherwise this call will update the existing story
-// identified by the specified ID.
+// identified by the ID specified in the URL.
+//
+// The payload for the PUT request looks like:
+// {
+//     "author": "author name",
+//     "headline": "title of the story",
+//     "public": true|false,
+//     "content": "content of the story",
+//     "date": "yyyy-MM-dd"
+// }
 app.put(STORIES_BY_ID_PATH, function (req, res) {
     let story = new NewsStory(req.body),
         id = req.params.id,
@@ -92,6 +110,14 @@ app.put(STORIES_BY_ID_PATH, function (req, res) {
     });
 });
 
+// PUT    /titles    -> update
+// This is the endpoint to use for updating a title of an existing story
+// The payload for the PUT request looks like:
+// {
+//     "author": "author name",
+//     "oldHeadline": "existing headline",
+//     "newHeadline": "new headline to change it to"
+// }
 app.put(TITLE_PATH, function (req, res, next) {
     let author = req.body.author,
         oldHeadline = req.body.oldHeadline,
@@ -106,6 +132,30 @@ app.put(TITLE_PATH, function (req, res, next) {
         return next(err);
     }
 });
+
+// PUT    /content    -> update
+// This is the endpoint to use for updating the content of an existing story
+// The payload for the PUT request looks like:
+// {
+//     "author": "author name",
+//     "oldHeadline": "existing headline",
+//     "newHeadline": "new headline to change it to"
+// }
+app.put(CONTENT_PATH, function (req, res, next) {
+    let author = req.body.author,
+        headline = req.body.headline,
+        newContent = req.body.newContent,
+        newsStory = newsService.get(headline);
+    if (newsStory) {
+        newsStory.content = newContent;
+        newsService.updateContent(newsStory);
+        return res.send(204);
+    } else {
+        err = new Error('Story not found');
+        err.status = 404;
+        return next(err);
+    }
+})
 
 // Response to GET requests on /stories
 app.get(STORIES_PATH, function (req, res) {
@@ -152,22 +202,6 @@ app.get('/search', function (req, res, next) {
     }
     sendObject(filteredStories, res);
 });
-
-app.put('/editContent', function (req, res, next) {
-    let author = req.body.author,
-        headline = req.body.headline,
-        newContent = req.body.newContent,
-        newsStory = newsService.get(headline);
-    if (newsStory) {
-        newsStory.content = newContent;
-        newsService.updateContent(newsStory);
-        return res.send(204);
-    } else {
-        err = new Error('Story not found');
-        err.status = 404;
-        return next(err);
-    }
-})
 
 const deleteFn = function (req, res, next) {
     let id = req.params.id,
