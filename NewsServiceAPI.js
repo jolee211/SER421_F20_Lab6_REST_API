@@ -27,8 +27,8 @@ function createStory(obj) {
     let story = new NewsStory(obj);
     newsService.writeNewsStory(story);
     
-    let id = newsService.findIndex(story.headline);
-    return { story: story, id: id };
+    // let id = newsService.findIndex(story.headline);
+    return { story: story, id: story.id };
 }
 
 // POST    /stories    -> create, return URI
@@ -63,6 +63,7 @@ app.post(STORIES_PATH, function (req, res, next) {
                 returnArray.push({
                     href: '/stories/' + obj.id,
                     properties: {
+                        id: obj.id,
                         author: obj.story.author,
                         headline: obj.story.headline,
                         public: obj.story.public,
@@ -180,34 +181,36 @@ app.delete(STORIES_BY_ID_PATH, function (req, res, next) {
 // dateFrom = starting date of a date range
 // dateTo = ending date of a date range
 // author = author name 
+//
+// If no filter is specified, returns a list of all stories
 app.get(STORIES_PATH, function (req, res, next) {
     let queryObject = url.parse(req.url, true).query,
         filteredStories;
-    try {
-        filteredStories = newsService.filter(queryObject);
-    } catch (err) {
-        return res.send(500, {
-            message: err.message
+    if (!queryObject || !Object.keys(queryObject).length) {
+        let index = newsService.getStories().map(function (story) {
+            return {
+                href: '/stories/' + story.id,
+                properties: {
+                    id: story.id,
+                    author: story.author,
+                    headline: story.headline,
+                    public: story.public,
+                    content: story.content,
+                    date: story.date
+                }
+            };
         });
+        res.send(index);
+    } else {
+        try {
+            filteredStories = newsService.filter(queryObject);
+        } catch (err) {
+            return res.send(500, {
+                message: err.message
+            });
+        }
+        sendObject(filteredStories, res);
     }
-    sendObject(filteredStories, res);
-});
-
-// Response to GET requests on /stories
-app.get(STORIES_PATH, function (req, res) {
-    let index = newsService.getStories().map(function (story, i) {
-        return {
-            href: '/stories/' + i,
-            properties: {
-                author: story.author,
-                headline: story.headline,
-                public: story.public,
-                content: story.content,
-                date: story.date
-            }
-        };
-    });
-    res.send(index);
 });
 
 function sendObject(obj, res) {

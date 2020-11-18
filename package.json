@@ -5,6 +5,7 @@
     "dependencies": {
         "bunyan-request-logger": "2.1.0",
         "express": "4.x",
-        "express-error-handler": "1.1.0"
+        "express-error-handler": "1.1.0",
+        "uuid": "8.3.1"
     }
 }

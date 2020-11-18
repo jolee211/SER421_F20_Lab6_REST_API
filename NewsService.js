@@ -1,8 +1,10 @@
 const fs = require('fs');
 const DATA_FILE_NAME = 'persistencestore.json';
+const uuidv1 = require('uuid').v1;
 
 exports.NewsStory = class {
 	constructor (obj) {
+		this.id = uuidv1();
 		this.author = "";
 		this.headline = "";
 		this.public = false;
@@ -201,7 +203,7 @@ exports.NewsService = class {
 	 *   be found
 	 */
 	getById (id) {
-		return this.getStories()[id];
+		return this.stories.find(story => story.id == id);
 	}
 
 	/**
@@ -287,6 +289,13 @@ exports.NewsService = class {
 	filter (criteria) {
 		if (!criteria.headline && !criteria.dateFrom && !criteria.dateTo && !criteria.author) {
 			throw new Error("At least one of headline, dateFrom, dateTo, author must be specified");
+		}
+
+		let criteriaProperties = ['headline', 'dateFrom', 'dateTo', 'author'];
+		for (const property in criteria) {
+			if (!criteriaProperties.includes(property)) {
+				throw new Error('The param ' + property + ' is not a valid criteria');
+			}
 		}
 
 		let filteredStories = this.stories;
