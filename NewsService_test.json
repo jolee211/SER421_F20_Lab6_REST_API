@@ -1,49 +1,36 @@
 {
 	"info": {
-		"_postman_id": "25a28109-e65e-426b-9505-baa145efcaf4",
-		"name": "NewsService_test",
+		"_postman_id": "c40c3aa9-dd34-4c63-87bd-cd9b5899f22b",
+		"name": "NewsService_test Lab 6",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "login",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "username",
-						"value": "jolee211",
-						"type": "text"
-					},
-					{
-						"key": "password",
-						"value": "jolee211",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "{{baseUrl}}/login",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "testR1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8a8eaf8e-e355-4cb0-b06b-90abe09597da",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.collectionVariables.set(\"idToDelete\", jsonData.id);",
+							"pm.test(\"ID in response is correct length\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).to.length(36);",
+							"});",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+							"});",
+							"postman.setNextRequest(\"testR2\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
-				"header": [
-					{
-						"key": "x-access-token",
-						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2xlZTIxMSIsImV4cCI6MTYwNTk4NDkwNDIwNH0.mO2rloFhH4B8jKsOwmvh8nMHujPK5X7Lt4drCHUO2DM",
-						"type": "text"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n    \"author\": \"Li Zhou\",\n    \"headline\": \"Wildfires kill eight\",\n    \"public\": false,\n    \"content\": \"Oregon faces fire conditions unseen in decades\",\n    \"date\": \"2020-09-10\"\n}",
@@ -54,12 +41,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/create",
+					"raw": "{{baseUrl}}/stories",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"create"
+						"stories"
 					]
 				}
 			},
@@ -67,6 +54,31 @@
 		},
 		{
 			"name": "testR2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9214ca41-9538-47a4-845c-e9683d40313a",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202, 204]);",
+							"});",
+							"postman.setNextRequest(\"testR3\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "918d454e-1647-405d-b2e1-821e8afec92b",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -86,12 +98,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/editTitle",
+					"raw": "{{baseUrl}}/titles",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"editTitle"
+						"titles"
 					]
 				}
 			},
@@ -99,6 +111,21 @@
 		},
 		{
 			"name": "testR3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ef8ef62d-6e34-4cb8-a7b0-094a5386821a",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202, 204]);",
+							"});",
+							"postman.setNextRequest(\"testR4\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -118,12 +145,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/editContent",
+					"raw": "{{baseUrl}}/content",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"editContent"
+						"content"
 					]
 				}
 			},
@@ -131,6 +158,21 @@
 		},
 		{
 			"name": "testR4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7bfea32d-65f0-437d-a990-d06ce074f444",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202, 204]);",
+							"});",
+							"postman.setNextRequest(\"testR2WithNonExistingItem\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [
@@ -150,12 +192,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/delete/{{idToDelete}}",
+					"raw": "{{baseUrl}}/stories/{{idToDelete}}",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"delete",
+						"stories",
 						"{{idToDelete}}"
 					]
 				}
@@ -164,6 +206,21 @@
 		},
 		{
 			"name": "testR2WithNonExistingItem",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f212234b-d8bd-47cc-8b43-e2bb689bf046",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"postman.setNextRequest(\"setUpMultipleStories\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -183,12 +240,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/editTitle",
+					"raw": "{{baseUrl}}/titles",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"editTitle"
+						"titles"
 					]
 				}
 			},
@@ -196,6 +253,25 @@
 		},
 		{
 			"name": "setUpMultipleStories",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "579bdfe5-ea03-4f6a-afb5-aba402f3b271",
+						"exec": [
+							"pm.test(\"Number of stories in response is correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.length(6);",
+							"});",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);",
+							"});",
+							"postman.setNextRequest(\"testR5a\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -215,12 +291,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/create",
+					"raw": "{{baseUrl}}/stories",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"create"
+						"stories"
 					]
 				}
 			},
@@ -228,6 +304,28 @@
 		},
 		{
 			"name": "testR5a",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6408948b-2291-4db5-9404-0ad5735c1885",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.test(\"Number of stories in response is correct\", function () {",
+							"    pm.expect(jsonData).to.length(2);",
+							"});",
+							"pm.test(\"Correct headline\", function () {",
+							"    pm.expect(jsonData[0].headline).to.eql(pm.collectionVariables.get(\"story1Headline\"));",
+							"});",
+							"pm.test(\"Correct headline\", function () {",
+							"    pm.expect(jsonData[1].headline).to.eql(pm.collectionVariables.get(\"story4Headline\"));",
+							"});",
+							"postman.setNextRequest(\"testDateFromFilter\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
@@ -238,12 +336,12 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/search?headline=A",
+					"raw": "{{baseUrl}}/stories?headline=A",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"search"
+						"stories"
 					],
 					"query": [
 						{
@@ -257,6 +355,31 @@
 		},
 		{
 			"name": "testDateFromFilter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "33eaf20f-21b6-48d4-8534-3af490768268",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.test(\"Number of stories in response is correct\", function () {",
+							"    pm.expect(jsonData).to.length(3);",
+							"});",
+							"pm.test(\"Correct headline\", function () {",
+							"    pm.expect(jsonData[0].headline).to.eql(pm.collectionVariables.get(\"story1Headline\"));",
+							"});",
+							"pm.test(\"Correct headline\", function () {",
+							"    pm.expect(jsonData[1].headline).to.eql(pm.collectionVariables.get(\"story2Headline\"));",
+							"});",
+							"pm.test(\"Correct headline\", function () {",
+							"    pm.expect(jsonData[2].headline).to.eql(pm.collectionVariables.get(\"story3Headline\"));",
+							"});",
+							"postman.setNextRequest(\"testDateToFilter\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
@@ -267,12 +390,12 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/search?dateFrom=2000-05-10",
+					"raw": "{{baseUrl}}/stories?dateFrom=2000-05-10",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"search"
+						"stories"
 					],
 					"query": [
 						{
@@ -286,6 +409,34 @@
 		},
 		{
 			"name": "testDateToFilter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e48b56a5-f96b-417a-a755-f30f5870e35d",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.test(\"Number of stories in response is correct\", function () {",
+							"    pm.expect(jsonData).to.length(4);",
+							"});",
+							"pm.test(\"Correct headline\", function () {",
+							"    pm.expect(jsonData[0].headline).to.eql(pm.collectionVariables.get(\"story3Headline\"));",
+							"});",
+							"pm.test(\"Correct headline\", function () {",
+							"    pm.expect(jsonData[1].headline).to.eql(pm.collectionVariables.get(\"story4Headline\"));",
+							"});",
+							"pm.test(\"Correct headline\", function () {",
+							"    pm.expect(jsonData[2].headline).to.eql(pm.collectionVariables.get(\"story5Headline\"));",
+							"});",
+							"pm.test(\"Correct headline\", function () {",
+							"    pm.expect(jsonData[3].headline).to.eql(pm.collectionVariables.get(\"story6Headline\"));",
+							"});",
+							"postman.setNextRequest(\"testDateRangeFilter\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
@@ -296,12 +447,12 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/search?dateTo=2013-09-09",
+					"raw": "{{baseUrl}}/stories?dateTo=2013-09-09",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"search"
+						"stories"
 					],
 					"query": [
 						{
@@ -315,6 +466,28 @@
 		},
 		{
 			"name": "testDateRangeFilter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b14c85fa-08ba-41b1-8c7a-e889af1cf86e",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.test(\"Number of stories in response is correct\", function () {",
+							"    pm.expect(jsonData).to.length(2);",
+							"});",
+							"pm.test(\"Correct headline\", function () {",
+							"    pm.expect(jsonData[0].headline).to.eql(pm.collectionVariables.get(\"story4Headline\"));",
+							"});",
+							"pm.test(\"Correct headline\", function () {",
+							"    pm.expect(jsonData[1].headline).to.eql(pm.collectionVariables.get(\"story5Headline\"));",
+							"});",
+							"postman.setNextRequest(\"testR5c\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
@@ -325,12 +498,12 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/search?dateFrom=1992-03-24&dateTo=2002-03-12",
+					"raw": "{{baseUrl}}/stories?dateFrom=1992-03-24&dateTo=2002-03-12",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"search"
+						"stories"
 					],
 					"query": [
 						{
@@ -348,6 +521,25 @@
 		},
 		{
 			"name": "testR5c",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "96e6747a-43fb-41d4-8fe8-05b2cf73307d",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.test(\"Number of stories in response is correct\", function () {",
+							"    pm.expect(jsonData).to.length(1);",
+							"});",
+							"pm.test(\"Correct headline\", function () {",
+							"    pm.expect(jsonData[0].headline).to.eql(pm.collectionVariables.get(\"story1Headline\"));",
+							"});",
+							"postman.setNextRequest(\"setUpMoreStoriesOfSameAuthors\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
@@ -358,12 +550,12 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/search?author=Li Zhou",
+					"raw": "{{baseUrl}}/stories?author=Li Zhou",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"search"
+						"stories"
 					],
 					"query": [
 						{
@@ -377,6 +569,23 @@
 		},
 		{
 			"name": "setUpMoreStoriesOfSameAuthors",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1ab0a253-83da-4e9d-ab73-d58f7c3cb068",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.test(\"Number of stories in response is correct\", function () {",
+							"    pm.expect(jsonData).to.length(4);",
+							"});",
+							"pm.collectionVariables.set(\"idToRetrieve\", jsonData[3].properties.id);",
+							"postman.setNextRequest(\"testR5ac\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -396,12 +605,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/create",
+					"raw": "{{baseUrl}}/stories",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"create"
+						"stories"
 					]
 				}
 			},
@@ -409,6 +618,28 @@
 		},
 		{
 			"name": "testR5ac",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "550ec8cf-714a-4bfb-890e-58de02e389d7",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.test(\"Number of stories in response is correct\", function () {",
+							"    pm.expect(jsonData).to.length(2);",
+							"});",
+							"pm.test(\"Correct headline\", function () {",
+							"    pm.expect(jsonData[0].headline).to.eql(pm.collectionVariables.get(\"story5Headline\"));",
+							"});",
+							"pm.test(\"Correct headline\", function () {",
+							"    pm.expect(jsonData[1].headline).to.eql(pm.collectionVariables.get(\"story9Headline\"));",
+							"});",
+							"postman.setNextRequest(\"testR5abc error in query syntax\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
@@ -419,12 +650,12 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/search?headline=in&author=David Goodman",
+					"raw": "{{baseUrl}}/stories?headline=in&author=David Goodman",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"search"
+						"stories"
 					],
 					"query": [
 						{
@@ -441,7 +672,22 @@
 			"response": []
 		},
 		{
-			"name": "testR5abc v1",
+			"name": "testR5abc error in query syntax",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "178cb1a5-1369-470c-80a1-70b5f718a0ad",
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							"postman.setNextRequest(\"testR5abc v2\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
@@ -452,12 +698,12 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/search?headline=r&author=Caitlin McFall&dateFrom=2010-12-09&dateTo=2013-02-07",
+					"raw": "{{baseUrl}}/stories?headline=r&author=Caitlin McFall&da=2010-12-09&dateTo=2013-02-07",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"search"
+						"stories"
 					],
 					"query": [
 						{
@@ -469,7 +715,7 @@
 							"value": "Caitlin McFall"
 						},
 						{
-							"key": "dateFrom",
+							"key": "da",
 							"value": "2010-12-09"
 						},
 						{
@@ -483,6 +729,25 @@
 		},
 		{
 			"name": "testR5abc v2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8d9723de-19f1-45fc-b932-a672a73f318b",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.test(\"Number of stories in response is correct\", function () {",
+							"    pm.expect(jsonData).to.length(1);",
+							"});",
+							"pm.test(\"Correct headline\", function () {",
+							"    pm.expect(jsonData[0].headline).to.eql(pm.collectionVariables.get(\"story2Headline\"));",
+							"});",
+							"postman.setNextRequest(\"testR7\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
@@ -493,12 +758,12 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/search?headline=g&author=Caitlin McFall&dateFrom=2017-09-29&dateTo=2020-12-09",
+					"raw": "{{baseUrl}}/stories?headline=g&author=Caitlin McFall&dateFrom=2017-09-29&dateTo=2020-12-09",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"search"
+						"stories"
 					],
 					"query": [
 						{
@@ -521,13 +786,79 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "testR7",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "72fe3170-2708-439c-8394-e1d687a93ed1",
+						"exec": [
+							"pm.test(\"Correct headline\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.headline).to.eql(pm.collectionVariables.get(\"story10Headline\"));",
+							"});",
+							"postman.setNextRequest(\"get story by non-existent id\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/stories/{{idToRetrieve}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"stories",
+						"{{idToRetrieve}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get story by non-existent id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aa953657-71b4-4b9e-8a3c-c1f5ec5287a0",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/stories/non-existent-id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"stories",
+						"non-existent-id"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "9a6a2e85-6fcc-4b5a-ad81-79ff773a1d92",
+				"id": "542d3c9b-da40-4518-b779-f95205fc6fa4",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -537,7 +868,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "13cc0baf-e41e-40e5-9158-9a65a53c693c",
+				"id": "e0ab0e3f-f8cc-4bf5-af2d-185baf6c54a5",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -547,14 +878,59 @@
 	],
 	"variable": [
 		{
-			"id": "96ffc05b-1c1d-40bb-ac0c-faba4a805eca",
-			"key": "storyId",
-			"value": "11"
+			"id": "51942d42-7f3a-457b-8252-18848afc49d4",
+			"key": "idToDelete",
+			"value": "d88bc610-29f4-11eb-9f6e-37ef4c295129"
 		},
 		{
-			"id": "2fb2d79d-d022-4c98-95f1-ad092511abd8",
-			"key": "idToDelete",
-			"value": "0"
+			"id": "163a59f7-fa59-46ab-b8f6-b75bc4c01689",
+			"key": "idToRetrieve",
+			"value": "0b35a210-29f6-11eb-8060-7505bcdbc868"
+		},
+		{
+			"id": "86b4b1f2-055d-490e-8d8b-41377f2866f5",
+			"key": "story2Headline",
+			"value": "Ukraine backs opposition forces against Belarusian president"
+		},
+		{
+			"id": "21223a2c-ff49-4ce8-8fe7-243b0ff1696e",
+			"key": "story1Headline",
+			"value": "A group of centrist lawmakers has a new compromise proposal for more stimulus"
+		},
+		{
+			"id": "a414e34c-6b72-4249-bdd4-2cd52398d41a",
+			"key": "story4Headline",
+			"value": "Magic's not back yet at Disney: Analysts"
+		},
+		{
+			"id": "38f809c2-d6c7-4bad-b078-b130eb6f25f1",
+			"key": "story3Headline",
+			"value": "Nicaragua, Venezuela offer asylum to Snowden"
+		},
+		{
+			"id": "6a710090-ec29-4546-b0a9-71d0c8246db6",
+			"key": "story5Headline",
+			"value": "Six Kids Die in Detroit House Fire"
+		},
+		{
+			"id": "93c04541-77c7-4047-9e7d-78b8aae3b85b",
+			"key": "story6Headline",
+			"value": "McEnroe routs Lendl"
+		},
+		{
+			"id": "35d7f295-e0f9-42cb-8a2b-cec992a5c345",
+			"key": "story9Headline",
+			"value": "Remember Those Few Glorious Minutes When the World Was Free of Trump's Twitter Account?"
+		},
+		{
+			"id": "2c898dc4-18b2-4b40-9d2d-7691af1b315c",
+			"key": "story10Headline",
+			"value": "'I turned away Beatles for just £25'"
+		},
+		{
+			"id": "0775344d-c1ea-43bb-8b92-5af7d751d6ae",
+			"key": "baseUrl",
+			"value": "http://localhost:3000"
 		}
 	],
 	"protocolProfileBehavior": {}

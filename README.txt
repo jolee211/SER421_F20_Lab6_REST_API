@@ -4,6 +4,7 @@ Modules required:
 express
 bunyan-request-logger
 express-error-handler
+uuid
 
 There is a package.json file included.
 
@@ -15,11 +16,29 @@ directory as the NewsServiceAPI.js program. You can also delete the persistences
 
 The Postman requests have been exported to a file named NewsService_test.json.
 
-Variables to set:
-1. idToDelete - the ID of the story to delete. The '/stories' endpoint will
-return a JSON object with a href from a POST request. The href is the URL to 
-use for identifying a story. You can use the ID part of the href for a DELETE
-request to delete that particular story.
+The easiest way to run the tests is to use the Collection Runner in Postman to run the 
+"NewsService_test Lab 6" collection. If you choose to submit the Postman requests manually, then 
+the results will be more unpredictable.
+
+STEPS FOR TESTING:
+1. Place a blank persistencestore.json file in the same directory as the NewsServiceAPI.js program.
+2. Start or restart NewsServiceAPI.js.
+3. Import the "NewsService_test Lab 6" collection into Postman using the NewsService_test.json file.
+4. Run Postman Runner for the "NewsService_test Lab 6" collection.
+5. To rerun the tests, repeat steps 1-4.
+
+
+Variables:
+1. idToDelete - the ID of the story to delete. 
+The '/stories' endpoint will return a JSON object with a href from a POST request. The href is the
+URL to use for identifying a story. You can use the ID part of the href for a DELETE request to 
+delete that particular story.
+2. idToRetrieve - the ID of the story to retrieve for the "get story by id" request
+
+NOTE: These variables exist because the ID's for the stories are random numbers.
+So they will be different every time a new story is created and persisted.
+
+
 
 These Postman requests can be used to set up stories:
 1. testR1 - create one story
@@ -31,7 +50,8 @@ Here are the Postman requests for testing:
 1. testR1 - Test R1 by creating one story
 2. testR2 - Test R2 by changing the headline of the story created from testR1
 3. testR3 - Test R3 by changing the content of the story from testR2
-4. testR4 - Test R4 by deleting the story 0
+4. testR4 - Test R4 by deleting the story with a specific ID. The ID is the value of the idToDelete
+   Postman variable.
 5. testR2WithNonExistingItem - Test R2 with a headline that doesn't exist. The
    expected response is a 404.
 6. testR5a - Test R5 by looking for stories with headlines with 'A'.
@@ -49,3 +69,6 @@ The following requests test R5b
     the query.
 13. testR5abc v2 - Test R5 by looking for stories with headlines with 'g'
     and written by Caitlin McFall and written between Sep 29, 2017 and Dec 9, 2020.
+
+14. testR7 - Test R7 by looking for a story with a specific ID. The ID is the value of
+    the idToRetrieve Postman variable.

@@ -47,6 +47,7 @@ app.post(STORIES_PATH, function (req, res, next) {
         try {
             obj = createStory(req.body);
             res.send(201, {
+                id: obj.id,
                 href: '/stories/' + obj.id
             });
         } catch (e) {
@@ -213,7 +214,7 @@ app.get(STORIES_PATH, function (req, res, next) {
     }
 });
 
-function sendObject(obj, res) {
+function sendObject(obj, res, next) {
     if (!obj) {
         let err = new Error('Story not found');
         err.status = 404;
@@ -223,10 +224,11 @@ function sendObject(obj, res) {
 }
 
 // GET    /stories/:id    -> show
+// Return a story that corresponds to the specified ID
 app.get(STORIES_BY_ID_PATH, function (req, res, next) {
     let id = req.params.id,
         body = newsService.getById(id);
-    sendObject(body, res);
+    sendObject(body, res, next);
 });
 
 // Send available options on OPTIONS requests
