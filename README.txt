@@ -9,7 +9,7 @@ uuid
 There is a package.json file included.
 
 
-TESTING
+*** TESTING ***
 
 For predictable results, make sure that you place a blank persistencestore.json file in the same
 directory as the NewsServiceAPI.js program. You can also delete the persistencestore.json file.
@@ -72,3 +72,16 @@ The following requests test R5b
 
 14. testR7 - Test R7 by looking for a story with a specific ID. The ID is the value of
     the idToRetrieve Postman variable.
+
+
+*** EXTRA CREDIT ***
+I put my implementations for EC1 and EC2 in a subdirectory called EC.
+
+My private key is in a file called dlee129-key.pem.
+My self-signed certificate is in a file called dlee129-cert.pem.
+
+The key files are in the EC subdirectory as well. The NewsServiceAPI.js will look for the 
+persistencestore.json file in the EC directory.
+
+NOTE: Since the certificate is self-signed, you need to disable SSL certificate verification in Postman
+for submitting requests using HTTPS.
