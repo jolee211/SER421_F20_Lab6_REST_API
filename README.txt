@@ -85,3 +85,4 @@ persistencestore.json file in the EC directory.
 
 NOTE: Since the certificate is self-signed, you need to disable SSL certificate verification in Postman
 for submitting requests using HTTPS.
+NOTE: If you're using curl, add the -k parameter so that it doesn't try to verify the certificate.
